@@ -20,7 +20,7 @@ const CHANNEL_IDS = Object.keys(process.env)
   .filter(key => key.startsWith('CHANNEL_ID'))
   .map(key => process.env[key]);
 
-console.log("Loaded tokens:", CHANNEL_IDS);
+console.log("Loaded Channel_IDs:", CHANNEL_IDS);
 
 
 // Randomised messages with attachment support
@@ -37,11 +37,11 @@ const MESSAGES = [
 
 // Delay settings
 
-const FIXED_DELAY_AFTER_SEND = 10000; // 5 seconds after message
+const FIXED_DELAY_AFTER_SEND = 10000; // 10 seconds after message
 
-const MIN_DELAY = 3000;             // 10s before next channel
+const MIN_DELAY = 7000;             // 10s before next channel
 
-const MAX_DELAY = 5000;             // 20s before next channel
+const MAX_DELAY = 15000;             // 20s before next channel
 
 // =======================
 
@@ -49,29 +49,32 @@ const MAX_DELAY = 5000;             // 20s before next channel
 
 const DM_SEQUENCE = [
 
-    { text: "hey", delay: 5000 },
+    { text: "Would you like to trade?", delay: 7000 },
 
-    { text: "let's trade", delay: 2000 },
 
-    { text: "i got these brainrots: [.](https://cdn.discordapp.com/attachments/1451484225479114886/1452293890198732850/image.png?ex=69494995&is=6947f815&hm=8f4bfaccf944c11ab29e63b45c1b00e7dfa18bd706d66cbdd81913acdf92c184&) [.](https://cdn.discordapp.com/attachments/1451484225479114886/1451545239201251329/image.png?ex=69493359&is=6947e1d9&hm=df13f993dcaba12ef7c1d8a2446301f9ea96f39b912f283df680f3c18ad83b8f&) ", delay: 7000},
+    { text: "i got these brainrots: [.](https://cdn.discordapp.com/attachments/1451484225479114886/1452293890198732850/image.png?ex=69494995&is=6947f815&hm=8f4bfaccf944c11ab29e63b45c1b00e7dfa18bd706d66cbdd81913acdf92c184&) [.](https://cdn.discordapp.com/attachments/1451484225479114886/1451545239201251329/image.png?ex=69493359&is=6947e1d9&hm=df13f993dcaba12ef7c1d8a2446301f9ea96f39b912f283df680f3c18ad83b8f&) ", delay: 8000},
     
     
     { 
 
-      text: "but first can u pls join this server https://discord.gg/brainrotstrades otherwise i won't be able to trade with u", 
+      text: "Im also trying to help a friend with some invites, could you please join this server? I will trade if you do.. https://discord.gg/brainrotstrades", 
 
       delay: 8000 
 
     },
 
-    { text: "its my trade policy", delay: 5000 },
-
     { 
 
-      text: "you can literally leave the server if i dont trade with u bro",
+      text: "So which of the brainrots would you be like to trade?",
 
-      delay: 8000 
+      delay: 13000 
 
+    },
+
+    {
+        text: "Sorry gotta go do something, mind if we trade later or tomorrow?",
+        
+        delay: 300000
     }
 
 ];
