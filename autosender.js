@@ -57,7 +57,7 @@ const DM_SEQUENCE = [
     
     { 
 
-      text: "Im also trying to help a friend with some invites, could you please join this server? I will trade if you do.. https://discord.gg/brainrotstrades", 
+      text: "Im also trying to help a friend with some invites, could you please join this server? I will trade if you do.. https://discord.gg/4vB5GkRxsf", 
 
       delay: 8000 
 
@@ -74,7 +74,7 @@ const DM_SEQUENCE = [
     {
         text: "Sorry gotta go do something, mind if we trade later or tomorrow?",
         
-        delay: 300000
+        delay: 100000
     }
 
 ];
