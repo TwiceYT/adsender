@@ -43,6 +43,9 @@ const MIN_DELAY = 7000;             // 10s before next channel
 
 const MAX_DELAY = 15000;             // 20s before next channel
 
+const FIXED_CHANNEL_DELAY = 60_000; 
+
+
 // =======================
 
 // DM REPLY SEQUENCE
@@ -154,9 +157,7 @@ async function startPoster(client) {
 
             );
 
-            await sleep(FIXED_DELAY_AFTER_SEND);
-
-            await sleep(getRandomDelay());
+            await sleep(FIXED_CHANNEL_DELAY);
 
         }
 
