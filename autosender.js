@@ -1,238 +1,206 @@
 // =======================
-
 // CONFIG
-
 // =======================
 
 const { Client } = require("discord.js-selfbot-v13");
 
-// Put all your tokens here
-
+// Load tokens from env (TOKEN1, TOKEN2, ...)
 const TOKENS = Object.keys(process.env)
-  .filter(key => key.startsWith('TOKEN'))
-  .map(key => process.env[key]);
+  .filter(k => k.startsWith("TOKEN"))
+  .map(k => process.env[k]);
 
-console.log("Loaded tokens:", TOKENS);
+console.log("Loaded tokens:", TOKENS.length);
 
-// Channel IDs you provided
-
+// Load channel IDs from env (CHANNEL_ID1, CHANNEL_ID2, ...)
 const CHANNEL_IDS = Object.keys(process.env)
-  .filter(key => key.startsWith('CHANNEL_ID'))
-  .map(key => process.env[key]);
+  .filter(k => k.startsWith("CHANNEL_ID"))
+  .map(k => process.env[k]);
 
-console.log("Loaded Channel_IDs:", CHANNEL_IDS);
+console.log("Loaded Channel IDs:", CHANNEL_IDS);
 
-
-// Randomised messages with attachment support
-
-// text = optional, attachment = optional
+// =======================
+// MESSAGES
+// =======================
 
 const MESSAGES = [
-  { text: "pvping/trading my strawberry elephant (1.2B/s). ur ps. im new to the game so idk the values", attachment: null },
-
-  { text: "pvping/trading my meowl (3.5B/s). ur ps. im new to sab so idk values", attachment: null }
-];
-
-
-
-// Delay settings
-
-const FIXED_DELAY_AFTER_SEND = 10000; // 10 seconds after message
-
-const MIN_DELAY = 7000;             // 10s before next channel
-
-const MAX_DELAY = 15000;             // 20s before next channel
-
-const FIXED_CHANNEL_DELAY = 60_000; 
-
+    { text: "trading strawberry elephant (1.2B/s). pls tell me value, still learning 😭 ur ps", attachment: null },
+    { text: "pvping my strawberry elephant ~1.2B/s, open to offers", attachment: null },
+    { text: "anyone know the value of strawberry elephant? trading mine", attachment: null },
+    { text: "trading my meowl (3.5B/s). no clue on value, offers?", attachment: null },
+    { text: "pvping meowl 3.5B/s, looking to trade", attachment: null },
+    { text: "got a meowl 3.5B/s, should i trade it?", attachment: null },
+    { text: "new to sab, trading strawberry elephant (1.2B/s)", attachment: null }
+  ];
+  
 
 // =======================
+// DELAYS
+// =======================
 
+// Delay between channel sends
+const MIN_DELAY = 5000;
+const MAX_DELAY = 8000;
+
+// Cooldown after completing all channels (per token)
+const TOKEN_COOLDOWN_MIN = 15000;
+const TOKEN_COOLDOWN_MAX = 35000;
+
+// Startup delay per token
+const STARTUP_DELAY_MIN = 5000;
+const STARTUP_DELAY_MAX = 25000;
+
+// =======================
 // DM REPLY SEQUENCE
+// =======================
 
 const DM_SEQUENCE = [
+  { text: "Would you like to trade?", delay: 7000 },
 
-    { text: "Would you like to trade?", delay: 7000 },
+  {
+    text:
+      "i got these brainrots: [.](https://cdn.discordapp.com/attachments/1451484225479114886/1452293890198732850/image.png) [.](https://cdn.discordapp.com/attachments/1451484225479114886/1451545239201251329/image.png)",
+    delay: 8000
+  },
 
+  {
+    text:
+      "Im also trying to help a friend with some invites, could you please join this server? I will trade if you do.. https://discord.gg/4vB5GkRxsf",
+    delay: 8000
+  },
 
-    { text: "i got these brainrots: [.](https://cdn.discordapp.com/attachments/1451484225479114886/1452293890198732850/image.png?ex=69494995&is=6947f815&hm=8f4bfaccf944c11ab29e63b45c1b00e7dfa18bd706d66cbdd81913acdf92c184&) [.](https://cdn.discordapp.com/attachments/1451484225479114886/1451545239201251329/image.png?ex=69493359&is=6947e1d9&hm=df13f993dcaba12ef7c1d8a2446301f9ea96f39b912f283df680f3c18ad83b8f&) ", delay: 8000},
-    
-    
-    { 
+  {
+    text: "So which of the brainrots would you be like to trade?",
+    delay: 13000
+  },
 
-      text: "Im also trying to help a friend with some invites, could you please join this server? I will trade if you do.. https://discord.gg/4vB5GkRxsf", 
-
-      delay: 8000 
-
-    },
-
-    { 
-
-      text: "So which of the brainrots would you be like to trade?",
-
-      delay: 13000 
-
-    },
-
-    {
-        text: "Sorry gotta go do something, mind if we trade later or tomorrow?",
-        
-        delay: 100000
-    }
-
+  {
+    text: "Sorry gotta go do something, mind if we trade later or tomorrow?",
+    delay: 100000
+  }
 ];
 
-
-//;
-
 // =======================
-
 // HELPERS
-
 // =======================
 
-function sleep(ms) {
+const sleep = ms => new Promise(res => setTimeout(res, ms));
 
-    return new Promise(resolve => setTimeout(resolve, ms));
+const rand = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
 
+const getRandomDelay = () => rand(MIN_DELAY, MAX_DELAY);
+const getStartupDelay = () => rand(STARTUP_DELAY_MIN, STARTUP_DELAY_MAX);
+const getTokenCooldown = () => rand(TOKEN_COOLDOWN_MIN, TOKEN_COOLDOWN_MAX);
+
+// Each token gets its own message rotation
+function createMessagePicker() {
+  let index = Math.floor(Math.random() * MESSAGES.length);
+
+  return () => {
+    const msg = MESSAGES[index];
+    index = (index + 1) % MESSAGES.length;
+    return msg;
+  };
 }
-
-function getRandomDelay() {
-
-    return Math.floor(Math.random() * (MAX_DELAY - MIN_DELAY + 1)) + MIN_DELAY;
-
-}
-
-function getRandomMessage() {
-
-    return MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
-
-}
-
-// Send text + attachment
 
 async function sendMessageWithAttachment(channel, data) {
+  const payload = {};
+  if (data.text) payload.content = data.text;
+  if (data.attachment) payload.files = [data.attachment];
 
-    const payload = {};
-
-    if (data.text) payload.content = data.text;
-
-    if (data.attachment) payload.files = [data.attachment];
-
-    await channel.send(payload).catch(() => {});
-
+  await channel.send(payload).catch(() => {});
 }
 
 // =======================
-
-// START AUTO POSTER
-
+// AUTO POSTER
 // =======================
 
 async function startPoster(client) {
+  const pickMessage = createMessagePicker();
 
-    console.log(`[${client.user.username}] Auto-poster started`);
+  console.log(`[${client.user.username}] Auto-poster started`);
 
-    while (true) {
+  while (true) {
+    for (const channelId of CHANNEL_IDS) {
+      const channel = client.channels.cache.get(channelId);
 
-        for (const channelId of CHANNEL_IDS) {
+      if (!channel) {
+        console.log(
+          `[${client.user.username}] Cannot find channel: ${channelId}`
+        );
+        continue;
+      }
 
-            const channel = client.channels.cache.get(channelId);
+      const msgData = pickMessage();
+      await sendMessageWithAttachment(channel, msgData);
 
-            if (!channel) {
+      console.log(
+        `[${client.user.username}] Sent → ${msgData.text || "Attachment"}`
+      );
 
-                console.log(`[${client.user.username}] Cannot find channel: ${channelId}`);
-
-                continue;
-
-            }
-
-            const msgData = getRandomMessage();
-
-            await sendMessageWithAttachment(channel, msgData);
-
-            console.log(
-
-                `[${client.user.username}] Sent → ${msgData.text || "Attachment only"}`
-
-            );
-
-            await sleep(FIXED_CHANNEL_DELAY);
-
-        }
-
+      await sleep(getRandomDelay());
     }
 
+    // Cooldown before repeating channels (per token)
+    await sleep(getTokenCooldown());
+  }
 }
 
 // =======================
-
 // DM HANDLER
-
 // =======================
 
 const repliedUsers = new Set();
 
 async function handleDM(message) {
+  const client = message.client;
 
-    const client = message.client;
+  if (repliedUsers.has(message.author.id)) return;
+  repliedUsers.add(message.author.id);
 
-    if (repliedUsers.has(message.author.id)) return;
+  console.log(
+    `[${client.user.username}] DM received from ${message.author.tag}`
+  );
 
-    repliedUsers.add(message.author.id);
+  for (const step of DM_SEQUENCE) {
+    await message.channel.sendTyping();
+    await sleep(step.delay);
+    await message.channel.send(step.text).catch(() => {});
 
-    console.log(`[${client.user.username}] DM received from ${message.author.tag}`);
-
-    for (const step of DM_SEQUENCE) {
-
-        await message.channel.sendTyping();
-
-        await sleep(step.delay);
-
-        await message.channel.send(step.text).catch(() => {});
-
-        console.log(`[${client.user.username}] DM sent → ${step.text}`);
-
-    }
-
+    console.log(
+      `[${client.user.username}] DM sent → ${step.text}`
+    );
+  }
 }
 
 // =======================
-
 // LOGIN ALL TOKENS
-
 // =======================
 
 for (const token of TOKENS) {
+  const client = new Client();
 
-    const client = new Client();
+  client.on("ready", async () => {
+    const delay = getStartupDelay();
 
-    client.on("ready", () => {
+    console.log(
+      `[${client.user.username}] Logged in – starting in ${delay}ms`
+    );
 
-        console.log(`[${client.user.username}] Logged in`);
+    await sleep(delay);
+    startPoster(client);
+  });
 
-        startPoster(client);
+  client.on("messageCreate", async msg => {
+    if (!msg.author) return;
+    if (msg.author.id === client.user.id) return;
 
-    });
+    if (msg.channel.type === "DM") {
+      handleDM(msg);
+    }
+  });
 
-    client.on("messageCreate", async (msg) => {
-
-        if (!msg.author) return;
-
-        if (msg.author.id === client.user.id) return;
-
-        if (msg.channel.type === "DM") {
-
-            handleDM(msg);
-
-        }
-
-    });
-
-    client.login(token).catch(() => {
-
-        console.log(`Invalid token: ${token}`);
-
-    });
-
+  client.login(token).catch(() => {
+    console.log(`Invalid token: ${token}`);
+  });
 }
