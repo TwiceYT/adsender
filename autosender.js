@@ -23,14 +23,15 @@ console.log("Loaded Channel IDs:", CHANNEL_IDS);
 // =======================
 
 const MESSAGES = [
-    { text: "trading strawberry elephant (1.2B/s). pls tell me value, still learning 😭 ur ps", attachment: null },
-    { text: "pvping my strawberry elephant ~1.2B/s, open to offers", attachment: null },
-    { text: "anyone know the value of strawberry elephant? trading mine", attachment: null },
-    { text: "trading my meowl (3.5B/s). no clue on value, offers?", attachment: null },
-    { text: "pvping meowl 3.5B/s, looking to trade", attachment: null },
-    { text: "got a meowl 3.5B/s, should i trade it?", attachment: null },
-    { text: "new to sab, trading strawberry elephant (1.2B/s)", attachment: null }
-  ];
+  { text: "**TRADING 150M ESOK SEKOLAH MY PRIV SAME TIME LF NORMAL SPHAGETI AND LOS NO MY HOTSPOT FOR ESOK**", attachment: null },
+  { text: "**PVP OR TRADE MY RB NUKE AND RB LA SPOOKY GRANDE ORCALEDON AND W OR L MY PS NO ALT**", attachment: null },
+  { text: "**Trade garama 500m my server**", attachment: null },
+  { text: "**TRADING AP [ADMIN PANEL] UR PS I GIFT FIRST**", attachment: null },
+  { text: "**pvping meowl 3.5B/s, looking to trade**", attachment: null },
+  { text: "**got a meowl 3.5B/s, should i trade it?**", attachment: null },
+  { text: "**new to sab, trading strawberry elephant (1.2B/s)**", attachment: null }
+];
+
   
 
 // =======================
