@@ -39,8 +39,8 @@ const MESSAGES = [
 // =======================
 
 // Delay between channel sends
-const MIN_DELAY = 5000;
-const MAX_DELAY = 8000;
+const MIN_DELAY = 7000;
+const MAX_DELAY = 10000;
 
 // Cooldown after completing all channels (per token)
 const TOKEN_COOLDOWN_MIN = 15000;
