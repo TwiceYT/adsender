@@ -20,8 +20,8 @@ const SHARED_REPLIED_USERS = new Set();
 // TIMING SETTINGS
 const CHANNEL_DELAY_MIN = 8000;   // Seconds gap between channels
 const CHANNEL_DELAY_MAX = 12000;  //  Seconds max gap
-const LOOP_COOLDOWN_MIN = 80000; // Minutes rest after finishing all channels
-const LOOP_COOLDOWN_MAX = 120000; // Minutes max rest
+const LOOP_COOLDOWN_MIN = 100000; // Minutes rest after finishing all channels
+const LOOP_COOLDOWN_MAX = 160000; // Minutes max rest
 
 // ==========================================
 // ADVERTISEMENT MESSAGES
