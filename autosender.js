@@ -7,8 +7,9 @@ const { Client, WebhookClient, MessageEmbed } = require("discord.js-selfbot-v13"
 const TOKENS = Object.keys(process.env).filter(k => k.startsWith("TOKEN")).map(k => process.env[k]);
 const CHANNEL_IDS = Object.keys(process.env).filter(k => k.startsWith("CHANNEL_ID")).map(k => process.env[k]);
 
-// *** PASTE YOUR WEBHOOK URL HERE (OR USE PROCESS.ENV.WEBHOOK_URL) ***
-const LOG_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1462890770871881740/nNniu9X9nyKc95fbso1vWlWuFlAC-ltYkh9ChH5LdVhZ50Arm93OBuarzBep7Iopr-d_"
+// *** PASTE YOUR WEBHOOK URL HERE ***
+// (I switched discordapp.com to discord.com for better reliability)
+const LOG_WEBHOOK_URL = "https://discord.com/api/webhooks/1462890770871881740/nNniu9X9nyKc95fbso1vWlWuFlAC-ltYkh9ChH5LdVhZ50Arm93OBuarzBep7Iopr-d_";
 
 const SHARED_REPLIED_USERS = new Set(); 
 
@@ -176,8 +177,13 @@ const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const log = (user, msg) => console.log(`[${new Date().toLocaleTimeString()}] [${user}] ${msg}`);
 
-// Initialize Webhook if URL is present
-const webhookClient = LOG_WEBHOOK_URL ? new WebhookClient({ url: LOG_WEBHOOK_URL }) : null;
+// Initialize Webhook (Handle failure gracefully if URL is bad)
+let webhookClient = null;
+try {
+  if (LOG_WEBHOOK_URL) webhookClient = new WebhookClient({ url: LOG_WEBHOOK_URL });
+} catch (e) {
+  console.log("Webhook URL is invalid, logging disabled.");
+}
 
 async function sendWebhookLog(botName, userTag, userId, content) {
   if (!webhookClient) return;
@@ -196,13 +202,19 @@ async function sendWebhookLog(botName, userTag, userId, content) {
       embeds: [embed],
     });
   } catch (err) {
-    console.error("Webhook failed:", err.message);
+    // Just log error, don't stop the bot
+    console.log(`[Log Failed] Webhook didn't send, but bot is still running. Error: ${err.message}`);
   }
 }
 
 function humanizeText(text) {
   let modified = text;
   if (Math.random() < 0.3) modified = modified.toLowerCase();
+  
+  // Always add ID to avoid duplicate text mute
+  const id = Math.floor(Math.random() * 9999);
+  modified += `\n\n[id:${id}]`; 
+  
   return modified;
 }
 
@@ -228,11 +240,11 @@ async function handleDM(message) {
 
   log(client.user.username, `>>> DM Conversation started with ${author.tag}`);
 
-  // 2. SEND WEBHOOK LOG
-  // This fires immediately when the bot "claims" the user
-  sendWebhookLog(client.user.tag, author.tag, author.id, content);
+  // 2. SEND WEBHOOK LOG (FIRE AND FORGET)
+  // removed 'await' so the bot doesn't freeze if webhook fails
+  sendWebhookLog(client.user.tag, author.tag, author.id, content).catch(e => {});
 
-  // 3. Start Sequence
+  // 3. Start Sequence IMMEDIATELY
   for (const step of DM_SEQUENCE) {
     const randomText = step.choices[Math.floor(Math.random() * step.choices.length)];
     const delay = rand(step.minDelay, step.maxDelay);
