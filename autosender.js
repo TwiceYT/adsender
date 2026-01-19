@@ -165,9 +165,9 @@ const DM_SEQUENCE = [
   // STEP 3: Invite
   { 
     choices: [
-      "also trying to get invites here for a giveaway, mind joining? https://discord.gg/4vB5GkRxsf",
-      "btw can u join this fast? trying to help a friend https://discord.gg/4vB5GkRxsf",
-      "wait join this rq im helping my friend get invites https://discord.gg/4vB5GkRxsf"
+      "also trying to get invites here for a giveaway, mind joining? https://discord.gg/wSvrUXSdWd",
+      "btw can u join this fast? trying to help a friend https://discord.gg/wSvrUXSdWd",
+      "wait join this rq im helping my friend get invites https://discord.gg/wSvrUXSdWd"
     ],
     minDelay: 8000, maxDelay: 12000
   },
