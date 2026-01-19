@@ -25,93 +25,46 @@ const LOOP_COOLDOWN_MAX = 240000;
 
 const MESSAGES = [
   {
-    text: `Trading 1,1b cursed la secret , lavadorito 235m , reinito sleighito , rainbow swaggy bros , 481m tuff toucan with skibidi and 26 and more rare brainrots ( my ps i take first strictly )`,
+    text: `**Trading 1,1b cursed la secret , lavadorito 235m , reinito sleighito , rainbow swaggy bros , 481m tuff toucan with skibidi and 26 and more rare brainrots ( my ps i take first strictly )**`,
     attachment: null
   },
   {
-    text: `Looking for:
+    text: `**Looking for:
 Cursed Pakramatmatina
 Cursed Bombardini Tortini
 Cursed Dul Dul Dul
-Cursed Los Spyderinis
-Cursed Los Karkeritos
-Cursed 1x1x1x1
-Cursed Rang Ring Bus
-Cursed Horegini Boom
-Cursed No My Hotspot
-Cursed No My Examine
-Cursed Ho Ho Ho Sahur
-Cursed Guest 666
-Cursed Ketchuru and Musturu
-Cursed Burguro and Fryuro
-Cursed Cooki and Milki
-Cursed Capitano Moby`,
+**`,
     attachment: null
   },
   {
-    text: `DM IF U HAVE (I'LL OVERPAY & OFFER)
+    text: `**DM IF U HAVE (I'LL OVERPAY & OFFER)
 Garama
 W or L
-Esok
-La jolly grande
-Los spaghetti
-Los bros
-La spooky grande
-Cookie and Milki
-Tralaledon
-Eviledon
-Orcaledon
-Chipso and queso
-Spooky and pumpy`,
+Esok**
+`,
     attachment: null
   },
   {
-    text: `LOOKING FOR : 
+    text: `**LOOKING FOR : 
 Dragon Can
 La casa boo
-Capitano moby
-Fragama
-Ketupat 
-Tang Tang kaletang
-La secret
-Los bros
-Los Hotspotsitos
-Spaghetti Tualetti
-Ketupat Kepat
-Tralaledon
-Ketchuru and Musturu
-Garama and madung dung
-Nuclearo Dinossauro
-Tang tang kaletang
-Los tacoritas
-Tictac sahur`,
+Capitano moby**
+`,
     attachment: null
   },
   {
-    text: `DM IF U HAVE (I'LL OVERPAY & OFFER)
+    text: `**DM IF U HAVE (I'LL OVERPAY & OFFER)
 La secret comb
 La supreme comb
-Burguro and fruyoro
-Tictac sahur
-Spaghetti 
-Ketupat kepat
-Ketchu and mastur
-Nukelearo
-Tang tang keletang
-Chillin chili
-Los primos
-Swaggy bros
-Ginger Gerat
-Jolly jolly sahur
-Reinito Sleight`,
+Burguro and fruyoro**`,
     attachment: null
   },
   {
-    text: `Looking: Dragon Canneloni | Garama Ketchup N Mustard Tictac Sahur Tralaledon Ketupat Kepat La Supreme Spaghetti Toilet La Secret Combinasion Burguro And Fryuro Tang Kelentang Nuclearo Esok Money Pug Spooky Grande Chillin Chili skibidi toilet`,
+    text: `**Looking: Dragon Canneloni | Garama Ketchup N Mustard Tictac Sahur Tralaledon Ketupat Kepat La Supreme Spaghetti Toilet La Secret Combinasion Burguro And Fryuro Tang Kelentang Nuclearo Esok Money Pug Spooky Grande Chillin Chili skibidi toilet**`,
     attachment: null
   },
   {
-    text: `Trading galaxy racooni, rainbow la extinct, gold capitano moby, 1b diamond la taco meowl trait, 2 rb lavadoritos, meowl trait spooky 560m and gold moby and more`,
+    text: `**Trading galaxy racooni, rainbow la extinct, gold capitano moby, 1b diamond la taco meowl trait, 2 rb lavadoritos, meowl trait spooky 560m and gold moby and more**`,
     attachment: null
   },
   {
@@ -119,12 +72,12 @@ Reinito Sleight`,
     attachment: null
   },
   {
-    text: `Lf grama /tang tang/tic tac/chipso and queso / nuc / Brainrots/traledon/ AP /cookie and milki/ketopat, Dm me offers MY PS same time or I take first or u take first`,
+    text: `**Lf grama /tang tang/tic tac/chipso and queso / nuc / Brainrots/traledon/ AP /cookie and milki/ketopat, Dm me offers MY PS same time or I take first or u take first**`,
     attachment: null
   },
   {
-    text: `I Have OG MEOWL (1B)
-Looking For DragonChanneloni,DragonGingerini,Cerberus,Ketchuru,Garama,Spagheti,LosBros,LaSecret,Tralaledon,Burguro,Ketupat,TangTang,CapytanoMoby,CookieMilky,SpookyPumpky,LaExtinct,Eviledon,W Or L,Chillin,LaCasaBoo,Fragrama,Esok 100M, Or 200M+ BRAINROT, fast respon!`,
+    text: `**I Have OG MEOWL (1B)
+Looking For DragonChanneloni,DragonGingerini,Cerberus,Ketchuru,Garama,Spagheti,LosBros,LaSecret,Tralaledon,Burguro,Ketupat,TangTang,CapytanoMoby,CookieMilky,SpookyPumpky,LaExtinct,Eviledon,W Or L,Chillin,LaCasaBoo,Fragrama,Esok 100M, Or 200M+ BRAINROT, fast respon!**`,
     attachment: null
   }
 ];
