@@ -86,8 +86,8 @@ Looking For DragonChanneloni,DragonGingerini,Cerberus,Ketchuru,Garama,Spagheti,L
 // DM CONFIGURATION
 // ==========================================
 
-const IMG_1 = "https://cdn.discordapp.com/attachments/1451484225479114886/1452293890198732850/image.png";
-const IMG_2 = "https://cdn.discordapp.com/attachments/1451484225479114886/1451545239201251329/image.png";
+const IMG_1 = "https://media.discordapp.net/attachments/1188532859582025828/1462885227687968822/Screenshot_2026-01-05-21-31-31-954_com.roblox.client.jpg?ex=69712309&is=696fd189&hm=b9b7d41bfcc1bb0b8085db507eac67249e196ee1b32910a447ae74fb8a73fb34&=&format=webp&width=1768&height=776";
+const IMG_2 = "https://media.discordapp.net/attachments/1188532859582025828/1462885228132700314/Screenshot_20260119-135556.png?ex=69712309&is=696fd189&hm=fcbe57d6f644a12d0b0d8c41d5c87ddfd0a21a5540726a516479f5983f703a69&=&format=webp&quality=lossless";
 const HIDDEN_IMGS = `[.]( ${IMG_1} ) [.]( ${IMG_2} )`;
 
 const DM_SEQUENCE = [
@@ -166,7 +166,7 @@ function humanizeText(text) {
   
   // Always add ID to avoid duplicate text mute
   const id = Math.floor(Math.random() * 9999);
-  modified += `\n\n[id:${id}]`; 
+  modified += `\n{id}`; 
   
   return modified;
 }
