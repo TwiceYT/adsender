@@ -166,7 +166,7 @@ function humanizeText(text) {
   
   // Always add ID to avoid duplicate text mute
   const id = Math.floor(Math.random() * 9999);
-  modified += `\n{id}`; 
+  modified += `${id}`; 
   
   return modified;
 }
